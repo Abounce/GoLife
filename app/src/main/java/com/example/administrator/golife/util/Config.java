@@ -30,4 +30,8 @@ public class Config {
     public static final String IMAGE_SIZE = "&pagesize=20&key="+JOKEKEY;
     //趣图访问地址
     public static final String BASE_JOKE_IMAGE= "http://japi.juhe.cn/joke/img/text.from?page=";
+    //笑话访问地址
+    public static final String BASE_JOKE_TEXT= "http://japi.juhe.cn/joke/content/text.from?=page=";
+
+
 }

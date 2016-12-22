@@ -37,8 +37,8 @@ public class JokeImageAdpterTwo extends RecyclerView.Adapter<JokeImageAdpterTwo.
         contxt = parent.getContext();
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.fragment_photo_item, parent, false);
         MyViewholder holder = new MyViewholder(view);
-     //   int position = holder.getAdapterPosition();
-     //   String url = ImageData.get(position).getUrl();
+        //   int position = holder.getAdapterPosition();
+        //   String url = ImageData.get(position).getUrl();
 
 
         //   final String url = dataBean.getUrl();
@@ -64,9 +64,9 @@ public class JokeImageAdpterTwo extends RecyclerView.Adapter<JokeImageAdpterTwo.
         holder.photoIv.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(contxt, PhotoViewActivity.class);
-               intent.putExtra("url",url);
-               contxt.startActivity(intent);
+                Intent intent = new Intent(contxt, PhotoViewActivity.class);
+                intent.putExtra("url", url);
+                contxt.startActivity(intent);
             }
         });
     }
@@ -83,13 +83,14 @@ public class JokeImageAdpterTwo extends RecyclerView.Adapter<JokeImageAdpterTwo.
         ImageView photoIv;
         @BindView(R.id.photo_time)
         TextView photoTime;
+
         public MyViewholder(View itemView) {
             super(itemView);
             ButterKnife.bind(this, itemView);
             photoTv = (TextView) itemView.findViewById(R.id.photo_tv);
             photoTime = (TextView) itemView.findViewById(R.id.photo_time);
             photoIv = (ImageView) itemView.findViewById(R.id.photo_iv);
-           // PhotoData.ResultBean.DataBean dataBean = ImageData.get(getLayoutPosition());
+            // PhotoData.ResultBean.DataBean dataBean = ImageData.get(getLayoutPosition());
         }
     }
 
@@ -99,27 +100,32 @@ public class JokeImageAdpterTwo extends RecyclerView.Adapter<JokeImageAdpterTwo.
      */
     public void clearData() {
         ImageData.clear();
-        notifyItemRangeChanged(0,ImageData.size());
+        notifyItemRangeChanged(0, ImageData.size());
 
     }
 
     /**
      * 根据指定位置添加数据
+     *
      * @param position
      * @param data
      */
     public void addData(int position, List<PhotoData.ResultBean.DataBean> data) {
-        if(data != null && data.size() >0){
-            ImageData.addAll(position,data);
-            notifyItemRangeChanged(position,ImageData.size());
+        if (data != null && data.size() > 0) {
+            ImageData.addAll(position, data);
+            notifyItemRangeChanged(position, ImageData.size());
         }
 
     }
+
     /**
      * 得到总的条数
+     *
      * @return
      */
     public int getDataCount() {
         return ImageData.size();
     }
+
+
 }

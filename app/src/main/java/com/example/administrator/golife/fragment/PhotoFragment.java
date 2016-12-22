@@ -78,7 +78,7 @@ public class PhotoFragment extends BaseFragment {
             public void onRefresh(MaterialRefreshLayout materialRefreshLayout) {
                 state=STATE_REFRES;
                 curPage=1;
-                url= Config.BASE_JOKE_IMAGE+"1"+Config.IMAGE_SIZE;
+                url= Config.BASE_JOKE_IMAGE+curPage+Config.IMAGE_SIZE;
                 getDataFromService();
             }
 
@@ -98,7 +98,7 @@ public class PhotoFragment extends BaseFragment {
     private void setDefault() {
         state = STATE_NORMAL;
         curPage=1;
-        url= Config.BASE_JOKE_IMAGE+"1"+Config.IMAGE_SIZE;
+        url= Config.BASE_JOKE_IMAGE+curPage+Config.IMAGE_SIZE;
     }
 
     private void getDataFromService() {
