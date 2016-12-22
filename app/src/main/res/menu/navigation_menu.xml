@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group android:checkableBehavior="single">
+        <item
+            android:title="主页"
+            android:id="@+id/menu_home"
+            android:icon="@drawable/selector_home" />
+    </group>
+    <item android:title="更多">
+        <menu>
+            <item android:title="设置" android:id="@+id/menu_set" android:icon="@drawable/selector_set"/>
+            <item android:title="关于" android:id="@+id/menu_about" android:icon="@drawable/selector_about"/>
+            <item android:title="注销" android:id="@+id/menu_ancellation" android:icon="@drawable/selector_ancellation"/>
+
+        </menu>
+    </item>
+</menu>
