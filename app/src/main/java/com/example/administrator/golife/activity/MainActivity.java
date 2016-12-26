@@ -14,6 +14,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
@@ -23,6 +24,7 @@ import com.example.administrator.golife.util.ActivityCollector;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import de.hdodenhof.circleimageview.CircleImageView;
 
 public class MainActivity extends BaseActivity implements NavigationView.OnNavigationItemSelectedListener {
 
@@ -47,11 +49,26 @@ public class MainActivity extends BaseActivity implements NavigationView.OnNavig
         mainToolbar.setTitleTextColor(Color.WHITE);
         setSupportActionBar(mainToolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, mainDrawer, mainToolbar, 0, 0);
-        mainDrawer.addDrawerListener(toggle);
+        mainDrawer.setDrawerListener(toggle);
         toggle.syncState();
-        changeFragment(new HomeFragment());
-        mainNavigation.setNavigationItemSelectedListener(this);
-        View head =View.inflate(this,R.layout.navigation_head,null);
+//        ActionBar actionBar = getSupportActionBar();
+//        if (actionBar!=null){
+//            actionBar.setDefaultDisplayHomeAsUpEnabled(true);
+//            actionBar.setHomeAsUpIndicator(R.drawable.back);
+//        }
+         changeFragment(new HomeFragment());
+         mainNavigation.setNavigationItemSelectedListener(this);
+         View head =View.inflate(this,R.layout.navigation_head,null);
+         Button navigation_headbt= (Button) head.findViewById(R.id.navigation_headbt);
+         CircleImageView navigation_headimage= (CircleImageView) head.findViewById(R.id.navigation_headimage);
+         navigation_headbt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                Toast.makeText(MainActivity.this, "修改头像成功", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         mainNavigation.addHeaderView(head);
 
     }

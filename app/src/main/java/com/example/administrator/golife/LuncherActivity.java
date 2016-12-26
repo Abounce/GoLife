@@ -107,6 +107,7 @@ public class LuncherActivity extends BaseActivity {
             public void onAnimationEnd(Animator animation) {
             startActivity(new Intent(LuncherActivity.this, MainActivity.class));
             finish();
+
             }
 
             @Override

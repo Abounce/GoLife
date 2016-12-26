@@ -134,6 +134,7 @@ public class PhotoFragment extends BaseFragment {
         case STATE_NORMAL://默认
         //显示数据
         //设置适配器
+
             adapter = new JokeImageAdpterTwo(ImageData);
             photo_rv.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false));
             photo_rv.setAdapter(adapter);

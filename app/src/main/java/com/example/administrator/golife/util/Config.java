@@ -33,5 +33,8 @@ public class Config {
     //笑话访问地址
     public static final String BASE_JOKE_TEXT= "http://japi.juhe.cn/joke/content/text.from?=page=";
 
+    //环信appkey
+    private static final String HUANXIN = "1121161111115360#go";
+
 
 }
