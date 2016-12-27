@@ -22,7 +22,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/12/8.
+ * Created by yhy on 2016/12/8.
  */
 public class CategoryFragment extends BaseFragment {
     private RecyclerView categorv;

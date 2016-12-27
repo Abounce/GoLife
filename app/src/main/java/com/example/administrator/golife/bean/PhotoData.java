@@ -3,7 +3,7 @@ package com.example.administrator.golife.bean;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/12/21.
+ * Created by yhy on 2016/12/21.
  */
 public class PhotoData {
 

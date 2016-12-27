@@ -7,7 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import com.example.administrator.golife.util.ActivityCollector;
 
 /**
- * Created by Administrator on 2016/12/13.
+ * Created by yhy on 2016/12/13.
  */
 public class BaseActivity extends AppCompatActivity {
     @Override

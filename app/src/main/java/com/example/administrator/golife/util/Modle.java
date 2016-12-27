@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 /**
- * Created by Administrator on 2016/12/26.
+ * Created by yhy on 2016/12/26.
  */
 public class Modle {
     private Context context;

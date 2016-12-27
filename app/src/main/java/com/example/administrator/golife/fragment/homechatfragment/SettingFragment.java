@@ -14,7 +14,7 @@ import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
 
 /**
- * Created by Administrator on 2016/12/27.
+ * Created by yhy on 2016/12/27.
  */
 public class SettingFragment extends BaseFragment implements View.OnClickListener {
     private Button bt_setting_out;

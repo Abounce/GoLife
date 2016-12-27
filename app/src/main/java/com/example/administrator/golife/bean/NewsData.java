@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/12/9.
+ * Created by yhy on 2016/12/9.
  */
 public class NewsData {
 

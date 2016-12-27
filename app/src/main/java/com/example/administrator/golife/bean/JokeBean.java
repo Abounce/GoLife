@@ -3,7 +3,7 @@ package com.example.administrator.golife.bean;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/12/22.
+ * Created by yhy on 2016/12/22.
  */
 public class JokeBean {
 

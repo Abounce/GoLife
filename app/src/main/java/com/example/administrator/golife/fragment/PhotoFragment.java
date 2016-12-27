@@ -23,7 +23,7 @@ import java.util.List;
 import okhttp3.Call;
 
 /**
- * Created by Administrator on 2016/12/8.
+ * Created by yhy on 2016/12/8.
  */
 public class PhotoFragment extends BaseFragment {
     private RecyclerView photo_rv;

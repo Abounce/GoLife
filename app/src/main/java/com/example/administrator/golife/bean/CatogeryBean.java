@@ -1,7 +1,7 @@
 package com.example.administrator.golife.bean;
 
 /**
- * Created by Administrator on 2016/12/13.
+ * Created by yhy on 2016/12/13.
  */
 public class CatogeryBean {
     private String images;

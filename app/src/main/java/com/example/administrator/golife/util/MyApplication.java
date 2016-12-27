@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 
 /**
- * Created by Administrator on 2016/12/8.
+ * Created by yhy on 2016/12/8.
  */
 public class MyApplication extends LitePalApplication {
     private static  Context context;

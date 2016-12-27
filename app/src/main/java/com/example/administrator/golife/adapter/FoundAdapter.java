@@ -9,7 +9,7 @@ import com.zhy.adapter.recyclerview.base.ViewHolder;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/12/26.
+ * Created by yhy on 2016/12/26.
  */
 public class FoundAdapter extends CommonAdapter<String> {
 

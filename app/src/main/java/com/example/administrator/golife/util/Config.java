@@ -1,7 +1,7 @@
 package com.example.administrator.golife.util;
 
 /**
- * Created by Administrator on 2016/12/9.
+ * Created by yhy on 2016/12/9.
  */
 public class Config {
     //启动页面的url

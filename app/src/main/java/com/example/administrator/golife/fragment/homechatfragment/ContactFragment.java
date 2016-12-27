@@ -9,7 +9,7 @@ import com.example.administrator.golife.activity.AddContactActivity;
 import com.hyphenate.easeui.ui.EaseContactListFragment;
 
 /**
- * Created by Administrator on 2016/12/27.
+ * Created by yhy on 2016/12/27.
  */
 public class ContactFragment extends EaseContactListFragment {
     @Override

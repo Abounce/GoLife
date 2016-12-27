@@ -10,7 +10,7 @@ import com.zhy.adapter.recyclerview.base.ViewHolder;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/12/22.
+ * Created by yhy on 2016/12/22.
  */
 public class JokeTextAdapter extends CommonAdapter<JokeBean.ResultBean.DataBean> {
 

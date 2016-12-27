@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2016/12/22.
+ * Created by yhy on 2016/12/22.
  */
 public class JokeImageAdpterTwo extends RecyclerView.Adapter<JokeImageAdpterTwo.MyViewholder> {
     List<PhotoData.ResultBean.DataBean> ImageData;

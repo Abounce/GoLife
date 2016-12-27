@@ -13,7 +13,7 @@ import com.zhy.adapter.recyclerview.base.ViewHolder;
 import java.util.List;
 
 /**
- * Created by Administrator on 2016/12/9.
+ * Created by yhy on 2016/12/9.
  */
 public class NewsAdapter extends CommonAdapter<NewsData.ResultBean.DataBean> {
   //  private List<NewsData.ResultBean.DataBean> datas;

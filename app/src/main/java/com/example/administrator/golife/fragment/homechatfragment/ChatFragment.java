@@ -6,7 +6,7 @@ import android.widget.TextView;
 import com.example.administrator.golife.fragment.BaseFragment;
 
 /**
- * Created by Administrator on 2016/12/27.
+ * Created by yhy on 2016/12/27.
  */
 public class ChatFragment extends BaseFragment {
     @Override

@@ -21,7 +21,7 @@ import butterknife.BindView;
 import butterknife.ButterKnife;
 
 /**
- * Created by Administrator on 2016/12/8.
+ * Created by yhy on 2016/12/8.
  */
 public class HomeFragment extends Fragment {
     @BindView(R.id.homefragment_vp)
