@@ -1,15 +1,8 @@
 package com.example.administrator.golife.dao;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
-import com.example.administrator.golife.bean.GroupInfo;
 import com.example.administrator.golife.bean.InvationInfo;
-import com.example.administrator.golife.bean.UserInfo;
 import com.example.administrator.golife.db.DBHelper;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -25,75 +18,12 @@ public class InviteTableDao {
 
     // 添加邀请
     public void addInvitation(InvationInfo invitationInfo) {
-        // 获取数据库链接
-        SQLiteDatabase db = mHelper.getReadableDatabase();
 
-        // 执行添加语句
-        ContentValues values = new ContentValues();
-        values.put(InviteTable.COL_REASON, invitationInfo.getReason());// 原因
-        values.put(InviteTable.COL_STATUS, invitationInfo.getStatus().ordinal());// 状态
-
-        UserInfo user = invitationInfo.getUserInfo();
-
-        if (user != null) {// 联系人
-            values.put(InviteTable.COL_USER_HXID, invitationInfo.getUserInfo().getHxid());
-            values.put(InviteTable.COL_USER_NAME, invitationInfo.getUserInfo().getName());
-        } else {// 群组
-            values.put(InviteTable.COL_GROUP_HXID, invitationInfo.getGroup().getGroupId());
-            values.put(InviteTable.COL_GROUP_NAME, invitationInfo.getGroup().getGroupName());
-            values.put(InviteTable.COL_USER_HXID, invitationInfo.getGroup().getInvatePerson());
-        }
-
-        db.replace(InviteTable.TAB_NAME, null, values);
     }
 
     // 获取所有邀请信息
     public List<InvationInfo> getInvitations() {
-        // 获取数据库链接
-        SQLiteDatabase db = mHelper.getReadableDatabase();
-
-        // 执行查询语句
-        String sql = "select * from " + InviteTable.TAB_NAME;
-        Cursor cursor = db.rawQuery(sql, null);
-
-        List<InvationInfo> invationInfos = new ArrayList<>();
-
-        while (cursor.moveToNext()) {
-            InvationInfo invationInfo = new InvationInfo();
-
-            invationInfo.setReason(cursor.getString(cursor.getColumnIndex(InviteTable.COL_REASON)));// 原因
-            invationInfo.setStatus(int2InviteStatus(cursor.getInt(cursor.getColumnIndex(InviteTable.COL_STATUS))));// 原因
-
-            String groupId = cursor.getString(cursor.getColumnIndex(InviteTable.COL_GROUP_HXID));
-
-            if (groupId == null) {// 联系人的邀请信息
-
-                UserInfo userInfo = new UserInfo();
-
-                userInfo.setHxid(cursor.getString(cursor.getColumnIndex(InviteTable.COL_USER_HXID)));
-                userInfo.setName(cursor.getString(cursor.getColumnIndex(InviteTable.COL_USER_NAME)));
-              //  userInfo.setNick(cursor.getString(cursor.getColumnIndex(InviteTable.COL_USER_NAME)));
-
-                invationInfo.setUserInfo(userInfo);
-            } else {// 群组的邀请信息
-                GroupInfo groupInfo = new GroupInfo();
-
-                groupInfo.setGroupId(cursor.getString(cursor.getColumnIndex(InviteTable.COL_GROUP_HXID)));
-                groupInfo.setGroupName(cursor.getString(cursor.getColumnIndex(InviteTable.COL_GROUP_NAME)));
-                groupInfo.setInvatePerson(cursor.getString(cursor.getColumnIndex(InviteTable.COL_USER_HXID)));
-
-                invationInfo.setGroup(groupInfo);
-            }
-
-            // 添加本次循环的邀请信息到总的集合中
-            invationInfos.add(invationInfo);
-        }
-
-        // 关闭资源
-        cursor.close();
-
-        // 返回数据
-        return invationInfos;
+    return null;
     }
 
     // 将int类型状态转换为邀请的状态
@@ -156,31 +86,12 @@ public class InviteTableDao {
 
     // 删除邀请
     public void removeInvitation(String hxId) {
-        if (hxId == null) {
-            return;
-        }
 
-        // 获取数据库链接
-        SQLiteDatabase db = mHelper.getReadableDatabase();
-
-        // 执行删除语句
-        db.delete(InviteTable.TAB_NAME, InviteTable.COL_USER_HXID + "=?", new String[]{hxId});
     }
 
     // 更新邀请状态
     public void updateInvitationStatus(InvationInfo.InvitationStatus invitationStatus, String hxId) {
-        if (hxId == null) {
-            return;
-        }
 
-        // 获取数据库链接
-        SQLiteDatabase db = mHelper.getReadableDatabase();
-
-        // 执行更新操作
-        ContentValues values = new ContentValues();
-        values.put(InviteTable.COL_STATUS, invitationStatus.ordinal());
-
-        db.update(InviteTable.TAB_NAME, values, InviteTable.COL_USER_HXID + "=?", new String[]{hxId});
     }
 
 }
