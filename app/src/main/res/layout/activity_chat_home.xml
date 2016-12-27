@@ -1,15 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.example.administrator.golife.activity.ChatHomeActivity">
-<TextView
-    android:text="聊天界面"
+    android:orientation="vertical"
+>
+<FrameLayout
+    android:id="@+id/homechat_fl"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" />
-</RelativeLayout>
+    android:layout_height="0dp"
+    android:layout_weight="1"/>
+    <RadioGroup
+        android:id="@+id/homechat_rg"
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="80dp">
+        <RadioButton
+            android:id="@+id/homechat_huihua"
+            android:text="会话"
+            style="@style/MainButton" />
+        <RadioButton
+            android:id="@+id/homechat_lianxiren"
+            android:text="联系人"
+            style="@style/MainButton" />
+        <RadioButton
+            android:id="@+id/homechat_shezhi"
+            android:text="设置"
+            style="@style/MainButton" />
+    </RadioGroup>
+
+</LinearLayout>

@@ -2,6 +2,8 @@ package com.example.administrator.golife.util;
 
 import android.content.Context;
 
+import org.litepal.tablemanager.Connector;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -19,6 +21,7 @@ public class Modle {
     }
     public void init(Context context){
         this.context=context;
+        Connector.getDatabase();
     }
     public ExecutorService getExecutorService(){
 

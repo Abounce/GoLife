@@ -41,6 +41,7 @@ public class LuncherActivity extends BaseActivity {
        // Log.d("data", "onCreate: ----------------------");
         ButterKnife.bind(this);
         StatusUtil.StatusChange(this);
+
         String cache = CacheUtils.getString(MyApplication.getContext(), Config.LOGIN_IMAGE);
         if (!TextUtils.isEmpty(cache)){
             parseData(cache);

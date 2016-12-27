@@ -1,12 +1,15 @@
 package com.example.administrator.golife.util;
 
-import android.app.Application;
+
 import android.content.Context;
 
 import com.hyphenate.chat.EMOptions;
 import com.hyphenate.easeui.controller.EaseUI;
 import com.orhanobut.logger.Logger;
 import com.zhy.http.okhttp.OkHttpUtils;
+
+import org.litepal.LitePal;
+import org.litepal.LitePalApplication;
 
 import java.util.concurrent.TimeUnit;
 
@@ -15,12 +18,13 @@ import okhttp3.OkHttpClient;
 /**
  * Created by Administrator on 2016/12/8.
  */
-public class MyApplication extends Application {
+public class MyApplication extends LitePalApplication {
     private static  Context context;
     @Override
     public void onCreate() {
         super.onCreate();
-
+        //初始化数据库
+       LitePal.initialize(this);
         //初始化EASEUI
         EMOptions options = new EMOptions();
        // 默认添加好友时，是不需要验证的，改成需要验证

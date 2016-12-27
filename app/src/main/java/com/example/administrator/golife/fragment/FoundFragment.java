@@ -8,10 +8,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 
 import com.example.administrator.golife.R;
+import com.example.administrator.golife.activity.ChatHomeActivity;
 import com.example.administrator.golife.activity.LoginActivity;
 import com.example.administrator.golife.adapter.FoundAdapter;
+import com.example.administrator.golife.table.User;
+import com.example.administrator.golife.util.Modle;
 import com.hyphenate.chat.EMClient;
 import com.zhy.adapter.recyclerview.MultiItemTypeAdapter;
+
+import org.litepal.crud.DataSupport;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +40,8 @@ public class FoundFragment extends BaseFragment {
 
     @Override
     protected void initData() {
+    //
+
       mdatas=new ArrayList<>();
         mdatas.add("微聊");
         mdatas.add("定位");
@@ -53,6 +60,7 @@ public class FoundFragment extends BaseFragment {
                         DengLu();
                         break;
                     case 1:
+
                         break;
                     case 2:
                         break;
@@ -68,8 +76,26 @@ public class FoundFragment extends BaseFragment {
     }
 
     private void DengLu() {
+
+
+
+        Modle.getInStance().getExecutorService().execute(new Runnable() {
+            @Override
+            public void run() {
+
         if (EMClient.getInstance().isLoggedInBefore()){
             //之前登陆过
+
+           List<User> users = DataSupport.where("hxid=?", EMClient.getInstance().getCurrentUser()).find(User.class);
+            if (users==null){
+                Intent intent=new Intent(mContext, LoginActivity.class);
+              startActivity(intent);
+           }else {
+                //效验
+                // 跳转到主页面
+                Intent intent = new Intent(mContext, ChatHomeActivity.class);
+                startActivity(intent);
+         }
 
         }else {
             //没有登陆过，调到注册页面
@@ -77,5 +103,9 @@ public class FoundFragment extends BaseFragment {
             startActivity(intent);
 
         }
+    //  getActivity().finish();
+            }
+        });
+
     }
 }

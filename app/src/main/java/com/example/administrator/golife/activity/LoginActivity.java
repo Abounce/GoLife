@@ -11,6 +11,7 @@ import android.widget.Button;
 import android.widget.Toast;
 
 import com.example.administrator.golife.R;
+import com.example.administrator.golife.table.User;
 import com.example.administrator.golife.util.Modle;
 import com.hyphenate.EMCallBack;
 import com.hyphenate.chat.EMClient;
@@ -66,11 +67,14 @@ public class LoginActivity extends AppCompatActivity {
                 EMClient.getInstance().login(name, pasword, new EMCallBack() {
                     @Override
                     public void onSuccess() {
-//                        // 对模型层数据的处理
-//                        Model.getInstance().loginSuccess(new UserInfo(loginName));
-//
-//                        // 保存用户账号信息到本地数据库
-//                        Model.getInstance().getUserAccountDao().addAccount(new UserInfo(loginName));
+                        // 对模型层数据的处理
+ //                       Model.getInstance().loginSuccess(new UserInfo(loginName));
+
+                        // 保存用户账号信息到本地数据库
+                        User user=new User();
+                        user.setName(name);
+                        user.setHxid(name);
+                        user.save();
 
                         runOnUiThread(new Runnable() {
                             @Override
