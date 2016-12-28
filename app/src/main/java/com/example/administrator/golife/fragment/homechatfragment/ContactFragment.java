@@ -32,6 +32,7 @@ public class ContactFragment extends EaseContactListFragment {
             spUtils.getInstance().save(spUtils.IS_NEW_INVITE,true);
         }
     };
+    private IntentFilter intentFilter;
 
     @Override
     protected void initView() {
@@ -76,6 +77,13 @@ public class ContactFragment extends EaseContactListFragment {
 
         //注册广播
          LBM=LocalBroadcastManager.getInstance(getActivity());
-        LBM.registerReceiver(ContactInviteChangeReceiver, new IntentFilter(Config.CONTACT_INVITE_CHANGE));
+        intentFilter = new IntentFilter(Config.CONTACT_INVITE_CHANGE);
+        LBM.registerReceiver(ContactInviteChangeReceiver,intentFilter );
+    }
+
+    @Override
+    public void onDestroy() {
+        LBM.unregisterReceiver(ContactInviteChangeReceiver);
+        super.onDestroy();
     }
 }
