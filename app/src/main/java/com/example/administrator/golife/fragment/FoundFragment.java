@@ -85,13 +85,19 @@ public class FoundFragment extends BaseFragment {
 
         if (EMClient.getInstance().isLoggedInBefore()){
             //之前登陆过
-
+       User muser=null;
            List<User> users = DataSupport.where("hxid=?", EMClient.getInstance().getCurrentUser()).find(User.class);
-            if (users==null){
+            for (User user:users){
+                if (user.getHxid().equals(EMClient.getInstance().getCurrentUser())){
+                    muser=user;
+                }
+            }
+            if (muser==null){
                 Intent intent=new Intent(mContext, LoginActivity.class);
               startActivity(intent);
            }else {
                 //效验
+                Modle.getInStance().logingSucess(muser.getName());
                 // 跳转到主页面
                 Intent intent = new Intent(mContext, ChatHomeActivity.class);
                 startActivity(intent);

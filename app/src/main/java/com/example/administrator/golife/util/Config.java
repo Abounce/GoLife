@@ -37,4 +37,9 @@ public class Config {
     private static final String HUANXIN = "1121161111115360#go";
 
 
+   //IM
+
+    public static final String CONTACT_CHANGE ="contact_change";//联系人信息
+
+    public static final String CONTACT_INVITE_CHANGE ="contact_invite_change";//邀请信息
 }

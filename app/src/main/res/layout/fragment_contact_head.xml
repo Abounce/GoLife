@@ -22,6 +22,7 @@
             android:textSize="20sp" />
 
         <ImageView
+            android:visibility="gone"
             android:id="@+id/iv_contact_red"
             android:src="@android:drawable/ic_notification_overlay"
             android:layout_gravity="center"

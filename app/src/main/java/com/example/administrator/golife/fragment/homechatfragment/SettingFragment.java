@@ -46,6 +46,8 @@ public class SettingFragment extends BaseFragment implements View.OnClickListene
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
+                                        //关闭数据库
+                                         Modle.getInStance().getDBManager().close();
                                         Toast.makeText(mContext, "退出成功", Toast.LENGTH_SHORT).show();
                                         // 回到登录页面
                                         Intent intent = new Intent(mContext, LoginActivity.class);
