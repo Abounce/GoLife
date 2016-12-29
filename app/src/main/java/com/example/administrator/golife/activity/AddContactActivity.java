@@ -89,7 +89,7 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
             @Override
             public void run() {
                 try {
-                    EMClient.getInstance().contactManager().addContact(userbean.getName(),"添加好友");
+                    EMClient.getInstance().contactManager().addContact(userbean.getHxid(),"加个好友呗");
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -112,4 +112,5 @@ public class AddContactActivity extends AppCompatActivity implements View.OnClic
 
 
     }
+
 }

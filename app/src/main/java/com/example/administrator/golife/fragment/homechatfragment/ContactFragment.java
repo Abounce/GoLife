@@ -5,17 +5,33 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.support.v4.content.LocalBroadcastManager;
+import android.view.ContextMenu;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 import com.example.administrator.golife.R;
 import com.example.administrator.golife.activity.AddContactActivity;
+import com.example.administrator.golife.activity.ChatActivity;
 import com.example.administrator.golife.activity.InviteActivity;
+import com.example.administrator.golife.bean.UserInfo;
 import com.example.administrator.golife.util.Config;
+import com.example.administrator.golife.util.Modle;
 import com.example.administrator.golife.util.spUtils;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.easeui.EaseConstant;
+import com.hyphenate.easeui.domain.EaseUser;
 import com.hyphenate.easeui.ui.EaseContactListFragment;
+import com.hyphenate.exceptions.HyphenateException;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by yhy on 2016/12/27.
@@ -33,6 +49,14 @@ public class ContactFragment extends EaseContactListFragment {
         }
     };
     private IntentFilter intentFilter;
+    private BroadcastReceiver ContactChangeReceiver=new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            refreshContact();
+        }
+    };
+    private String mHxid;
+
 
     @Override
     protected void initView() {
@@ -58,6 +82,16 @@ public class ContactFragment extends EaseContactListFragment {
                 startActivity(intent);
             }
         });
+        //设置listview的点击事件
+        //因为EaseContactListFragment封装好了 我直接调用当前的的就行了
+        setContactListItemClickListener(new EaseContactListItemClickListener() {
+            @Override
+            public void onListItemClicked(EaseUser easeUser) {
+               Intent intent=new Intent(getActivity(), ChatActivity.class);
+                intent.putExtra(EaseConstant.EXTRA_USER_ID,easeUser.getUsername());
+                startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -79,11 +113,130 @@ public class ContactFragment extends EaseContactListFragment {
          LBM=LocalBroadcastManager.getInstance(getActivity());
         intentFilter = new IntentFilter(Config.CONTACT_INVITE_CHANGE);
         LBM.registerReceiver(ContactInviteChangeReceiver,intentFilter );
+
+        LBM.registerReceiver(ContactChangeReceiver,new IntentFilter(Config.CONTACT_CHANGE));
+        //从环信服务器获取最新的联系人信息，并展示在此界面上
+        getContactFromHXService();
+
+        //绑定listview和contextmenu
+        registerForContextMenu(listView);
+    }
+
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        super.onCreateContextMenu(menu, v, menuInfo);
+        int position = ((AdapterView.AdapterContextMenuInfo) menuInfo).position;
+
+        EaseUser itemAtPosition = (EaseUser) listView.getItemAtPosition(position);
+         mHxid = itemAtPosition.getUsername();
+
+        getActivity().getMenuInflater().inflate(R.menu.contact,menu);
+    }
+
+    @Override
+    public boolean onContextItemSelected(MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.contact_delete:
+                //删除选中联系人
+                deleteContact();
+                return  true;
+
+
+        }
+        return super.onContextItemSelected(item);
+    }
+
+    private void deleteContact() {
+        //去服务器删除
+        Modle.getInStance().getExecutorService().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    EMClient.getInstance().contactManager().deleteContact(mHxid);
+                    //本地数据库更新
+                    Modle.getInStance().getDBManager().getContactTableDao().deleteContact(mHxid);
+                    if (getActivity()==null){
+                        return;
+                    }
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            refreshContact();
+                            Toast.makeText(getActivity(), "删除好友"+mHxid+"成功", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+                    if (getActivity()==null){
+                        return;
+                    }
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            refreshContact();
+                            Toast.makeText(getActivity(), "删除好友"+mHxid+"失败", Toast.LENGTH_SHORT).show();
+                        }
+                    });
+                }
+            }
+        });
+    }
+
+    private void getContactFromHXService() {
+        Modle.getInStance().getExecutorService().execute(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    List<String> huanid = EMClient.getInstance().contactManager().getAllContactsFromServer();
+                    if (huanid!=null&&huanid.size()>=0){
+                        List<UserInfo> userinfos=new ArrayList<UserInfo>();
+                        //保存到本地数据库
+                        for (String id:huanid){
+                        UserInfo userinfo=new UserInfo(id);
+                        userinfos.add(userinfo);
+                        }
+                        Modle.getInStance().getDBManager().getContactTableDao().saveContacts(userinfos,true);
+                        //刷新页面
+                        if (getActivity()==null){
+                            return;
+                        }
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                refreshContact();
+                            }
+                        });
+                    }
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+    }
+
+    private void refreshContact() {
+        //获取数据
+        List<UserInfo> contacts = Modle.getInStance().getDBManager().getContactTableDao().getContacts();
+        if (contacts!=null&&contacts.size()>=0){
+            Map<String,EaseUser> contactmap =new HashMap<>();
+            for (UserInfo contact:contacts){
+
+            contactmap.put(contact.getHxid(),new EaseUser(contact.getHxid()));
+            }
+            setContactsMap(contactmap);
+            refresh();
+
+        }
     }
 
     @Override
     public void onDestroy() {
         LBM.unregisterReceiver(ContactInviteChangeReceiver);
+        LBM.unregisterReceiver(ContactChangeReceiver);
         super.onDestroy();
     }
+
+
+
 }
