@@ -50,7 +50,7 @@ public class ChatFragment extends EaseConversationListFragment {
     @Override
     protected void initView() {
         super.initView();
-        //监听会话消息
+        //添加item的点击事件
         setConversationListItemClickListener(new EaseConversationListItemClickListener() {
             @Override
             public void onListItemClicked(EMConversation emConversation) {

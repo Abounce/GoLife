@@ -6,7 +6,6 @@ import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.engine.DiskCacheStrategy;
@@ -53,7 +52,7 @@ public class CategoryFragment extends BaseFragment {
         adapter.setOnItemClickListener(new MultiItemTypeAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                Toast.makeText(mContext,"点击了"+mdatas.get(position).getText()+"位置是"+position, Toast.LENGTH_SHORT).show();
+         //       Toast.makeText(mContext,"点击了"+mdatas.get(position).getText()+"位置是"+position, Toast.LENGTH_SHORT).show();
                 Intent intent =new Intent();
                 intent.putExtra("image_url",mdatas.get(position).getImages());
                 intent.putExtra("text",mdatas.get(position).getText());

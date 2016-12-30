@@ -109,7 +109,7 @@ public class NewsFragment extends BaseFragment {
           newsAdapter.setOnItemClickListener(new CommonAdapter.OnItemClickListener() {
             @Override
             public void onItemClick(View view, RecyclerView.ViewHolder holder, int position) {
-                Toast.makeText(mContext,"打印的位置是"+position+"--内容"+itemnews.get(position-1).getTitle()+"位置：---", Toast.LENGTH_SHORT).show();
+             //   Toast.makeText(mContext,"打印的位置是"+position+"--内容"+itemnews.get(position-1).getTitle()+"位置：---", Toast.LENGTH_SHORT).show();
               //  Logger.d("打印的位置是"+position+"--内容"+itemnews.get(position).getTitle());
                 Intent intent =new Intent(mContext, NewsDetailActivity.class);
                 intent.putExtra("itemnews",itemnews.get(position-1));

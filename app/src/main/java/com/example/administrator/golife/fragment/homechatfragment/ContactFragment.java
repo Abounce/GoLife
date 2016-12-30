@@ -17,6 +17,7 @@ import android.widget.Toast;
 import com.example.administrator.golife.R;
 import com.example.administrator.golife.activity.AddContactActivity;
 import com.example.administrator.golife.activity.ChatActivity;
+import com.example.administrator.golife.activity.GropListActivity;
 import com.example.administrator.golife.activity.InviteActivity;
 import com.example.administrator.golife.bean.UserInfo;
 import com.example.administrator.golife.util.Config;
@@ -87,8 +88,19 @@ public class ContactFragment extends EaseContactListFragment {
         setContactListItemClickListener(new EaseContactListItemClickListener() {
             @Override
             public void onListItemClicked(EaseUser easeUser) {
+                if (easeUser==null){
+                    return;
+                }
                Intent intent=new Intent(getActivity(), ChatActivity.class);
                 intent.putExtra(EaseConstant.EXTRA_USER_ID,easeUser.getUsername());
+                startActivity(intent);
+            }
+        });
+       LinearLayout ll_contact_group= (LinearLayout) head.findViewById(R.id.ll_contact_group);
+        ll_contact_group.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+            Intent intent=new Intent(getActivity(), GropListActivity.class);
                 startActivity(intent);
             }
         });
