@@ -100,7 +100,7 @@ public class NewsFragment extends BaseFragment {
          NewsData newsData = gson.fromJson(response, NewsData.class);
          NewsData.ResultBean result = newsData.getResult();
          List<NewsData.ResultBean.DataBean> maindata = result.getData();
-         topnews = maindata.subList(0, 5);
+         topnews = maindata.subList(0,5);
          itemnews = maindata.subList(5, maindata.size());
          newsAdapter = new NewsAdapter(mContext, R.layout.news_rv_item, itemnews);
          recyclerview.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false));

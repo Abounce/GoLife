@@ -20,9 +20,12 @@ import java.util.List;
 */
 public class PickAdapter extends BaseAdapter{
     List<PickContactInfo> pickContactInfos;
-    public PickAdapter(List<PickContactInfo> pickContactInfos) {
+    List<String> mExistMembers=new ArrayList<>();
+    public PickAdapter(List<PickContactInfo> pickContactInfos, List<String> ExistMembers) {
 
         this.pickContactInfos=pickContactInfos;
+        mExistMembers.clear();
+        mExistMembers.addAll(ExistMembers);
     }
 
     @Override
@@ -65,11 +68,11 @@ public class PickAdapter extends BaseAdapter{
         holder.tv_name.setText(pickContactInfo.getUserInfo().getName());
         holder.cb.setChecked(pickContactInfo.isCheaked());
 
-//        // 判断
-//        if(mExistMembers.contains(pickContactInfo.getUser().getHxid())) {
-//            holder.cb.setChecked(true);
-//            pickContactInfo.setIsChecked(true);
-//        }
+        // 判断
+        if(mExistMembers.contains(pickContactInfo.getUserInfo().getHxid())) {
+            holder.cb.setChecked(true);
+            pickContactInfo.setCheaked(true);
+        }
 
         return convertView;
 

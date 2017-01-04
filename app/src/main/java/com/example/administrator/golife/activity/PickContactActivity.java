@@ -13,7 +13,10 @@ import com.example.administrator.golife.R;
 import com.example.administrator.golife.adapter.PickAdapter;
 import com.example.administrator.golife.bean.PickContactInfo;
 import com.example.administrator.golife.bean.UserInfo;
+import com.example.administrator.golife.util.Config;
 import com.example.administrator.golife.util.Modle;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.chat.EMGroup;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +36,15 @@ public class PickContactActivity extends AppCompatActivity {
     ListView lvPick;
     private List<PickContactInfo> pickContactInfos;
     private PickAdapter pickAdapter;
+    private List<String> mExistMembers;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pick_contact);
         ButterKnife.bind(this);
+        // 获取传递过来的数据
+        getData();
         lvPick.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -66,6 +72,20 @@ public class PickContactActivity extends AppCompatActivity {
         initData();
     }
 
+    private void getData() {
+        String groupId = getIntent().getStringExtra(Config.GROUP_ID);
+
+        if (groupId != null) {
+            EMGroup group = EMClient.getInstance().groupManager().getGroup(groupId);
+            // 获取群众已经存在的所有群成员
+            mExistMembers = group.getMembers();
+        }
+
+        if (mExistMembers == null) {
+            mExistMembers = new ArrayList<>();
+        }
+    }
+
     private void initData() {
         //从数据库中获取联系人信息
         List<UserInfo> contacts = Modle.getInStance().getDBManager().getContactTableDao().getContacts();
@@ -77,7 +97,7 @@ public class PickContactActivity extends AppCompatActivity {
             pickContactInfos.add(pickContactInfo);
 
         }
-        pickAdapter = new PickAdapter(pickContactInfos);
+        pickAdapter = new PickAdapter(pickContactInfos,mExistMembers);
         lvPick.setAdapter(pickAdapter);
 
     }

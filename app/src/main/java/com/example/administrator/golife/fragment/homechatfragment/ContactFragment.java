@@ -56,6 +56,14 @@ public class ContactFragment extends EaseContactListFragment {
             refreshContact();
         }
     };
+    private BroadcastReceiver GroupChangeReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            // 显示红点
+            contact_red.setVisibility(View.VISIBLE);
+            spUtils.getInstance().save(spUtils.IS_NEW_INVITE, true);
+        }
+    };
     private String mHxid;
 
 
@@ -127,6 +135,8 @@ public class ContactFragment extends EaseContactListFragment {
         LBM.registerReceiver(ContactInviteChangeReceiver,intentFilter );
 
         LBM.registerReceiver(ContactChangeReceiver,new IntentFilter(Config.CONTACT_CHANGE));
+
+        LBM.registerReceiver(GroupChangeReceiver, new IntentFilter(Config.GROUP_INVITE_CHANGED));
         //从环信服务器获取最新的联系人信息，并展示在此界面上
         getContactFromHXService();
 
@@ -246,6 +256,7 @@ public class ContactFragment extends EaseContactListFragment {
     public void onDestroy() {
         LBM.unregisterReceiver(ContactInviteChangeReceiver);
         LBM.unregisterReceiver(ContactChangeReceiver);
+        LBM.unregisterReceiver(GroupChangeReceiver);
         super.onDestroy();
     }
 

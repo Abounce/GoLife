@@ -43,4 +43,6 @@ public class Config {
 
     public static final String CONTACT_INVITE_CHANGE ="contact_invite_change";//邀请信息
     public static final String GROUP_INVITE_CHANGED ="group_invite_changed";//群邀请信息
+    public static final String GROUP_ID ="group_id";
+    public static final String EXIT_GROUP = "exit_group";
 }

@@ -83,6 +83,7 @@ public class EventListener {
 
                 // 发送邀请信息变化的广播
                 mLBM.sendBroadcast(new Intent(Config.CONTACT_INVITE_CHANGE));
+                
             }
         };
     // 群信息变化的监听

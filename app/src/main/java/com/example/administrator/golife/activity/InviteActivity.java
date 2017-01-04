@@ -96,6 +96,137 @@ public class InviteActivity extends AppCompatActivity {
                 }
             });
         }
+
+        @Override
+        public void onInviteAccept(final InvationInfo invationInfo) {
+            Modle.getInStance().getExecutorService().execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        // 告诉环信服务器接受了邀请
+                        EMClient.getInstance().groupManager().acceptInvitation(invationInfo.getGroup().getGroupId(), invationInfo.getGroup().getInvatePerson());
+
+                        // 本地数据更新
+                        invationInfo.setStatus(InvationInfo.InvitationStatus.GROUP_ACCEPT_INVITE);
+                        Modle.getInStance().getDBManager().getInviteTableDao().addInvitation(invationInfo);
+
+                        // 内存数据的变化
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(InviteActivity.this, "接受邀请", Toast.LENGTH_SHORT).show();
+
+                                // 刷新页面
+                                refresh();
+                            }
+                        });
+                    } catch (HyphenateException e) {
+                        e.printStackTrace();
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(InviteActivity.this, "接受邀请失败", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onInviteReject(final InvationInfo invationInfo) {
+            Modle.getInStance().getExecutorService().execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        // 告诉环信服务器拒绝了邀请
+                        EMClient.getInstance().groupManager().declineInvitation(invationInfo.getGroup().getGroupId(), invationInfo.getGroup().getInvatePerson(),"拒绝邀请");
+
+                        // 更新本地数据库
+                        invationInfo.setStatus(InvationInfo.InvitationStatus.GROUP_REJECT_INVITE);
+                        Modle.getInStance().getDBManager().getInviteTableDao().addInvitation(invationInfo);
+
+                        // 更新内存的数据
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(InviteActivity.this, "拒绝邀请", Toast.LENGTH_SHORT).show();
+
+                                // 刷新页面
+                                refresh();
+                            }
+                        });
+                    } catch (HyphenateException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onApplicationAccept(final InvationInfo invationInfo) {
+            Modle.getInStance().getExecutorService().execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        // 告诉环信服务器接受了申请
+                        EMClient.getInstance().groupManager().acceptApplication(invationInfo.getGroup().getGroupId(), invationInfo.getGroup().getInvatePerson());
+
+                        // 更新数据库
+                        invationInfo.setStatus(InvationInfo.InvitationStatus.GROUP_ACCEPT_APPLICATION);
+                        Modle.getInStance().getDBManager().getInviteTableDao().addInvitation(invationInfo);
+
+                        // 更新内存
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(InviteActivity.this, "接受申请", Toast.LENGTH_SHORT).show();
+
+                                refresh();
+                            }
+                        });
+                    } catch (HyphenateException e) {
+                        e.printStackTrace();
+                    }
+                }
+            });
+        }
+
+        @Override
+        public void onApplicationReject(final InvationInfo invationInfo) {
+            Modle.getInStance().getExecutorService().execute(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        // 告诉环信服务器拒绝了申请
+                        EMClient.getInstance().groupManager().declineApplication(invationInfo.getGroup().getGroupId(),invationInfo.getGroup().getInvatePerson(),"拒绝申请");
+
+                        // 更新本地数据库
+                        invationInfo.setStatus(InvationInfo.InvitationStatus.GROUP_REJECT_APPLICATION);
+                        Modle.getInStance().getDBManager().getInviteTableDao().addInvitation(invationInfo);
+
+                        // 更新内存
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(InviteActivity.this, "拒绝申请", Toast.LENGTH_SHORT).show();
+
+                                refresh();
+                            }
+                        });
+                    } catch (HyphenateException e) {
+                        e.printStackTrace();
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Toast.makeText(InviteActivity.this, "拒绝申请失败", Toast.LENGTH_SHORT).show();
+                            }
+                        });
+                    }
+                }
+            });
+        }
     };
 
 
@@ -115,7 +246,7 @@ public class InviteActivity extends AppCompatActivity {
         // 注册邀请信息变化的广播
         mLBM = LocalBroadcastManager.getInstance(this);
         mLBM.registerReceiver(InviteChangedReceiver, new IntentFilter(Config.CONTACT_INVITE_CHANGE));
-      //  mLBM.registerReceiver(InviteChangedReceiver, new IntentFilter(Constant.GROUP_INVITE_CHANGED));
+        mLBM.registerReceiver(InviteChangedReceiver, new IntentFilter(Config.GROUP_INVITE_CHANGED));
     }
     private BroadcastReceiver InviteChangedReceiver = new BroadcastReceiver() {
         @Override
