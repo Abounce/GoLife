@@ -10,6 +10,7 @@ import android.view.View;
 import com.example.administrator.golife.R;
 import com.example.administrator.golife.activity.ChatHomeActivity;
 import com.example.administrator.golife.activity.LoginActivity;
+import com.example.administrator.golife.activity.MapAtivity;
 import com.example.administrator.golife.adapter.FoundAdapter;
 import com.example.administrator.golife.table.User;
 import com.example.administrator.golife.util.Modle;
@@ -44,8 +45,8 @@ public class FoundFragment extends BaseFragment {
 
       mdatas=new ArrayList<>();
         mdatas.add("微聊");
-        mdatas.add("定位");
-        mdatas.add("天气");
+//        mdatas.add("定位");
+//        mdatas.add("天气");
        // mdatas.add("交友");
 
     fragment_found_rv.setLayoutManager(new LinearLayoutManager(mContext,LinearLayoutManager.VERTICAL,false));
@@ -59,11 +60,11 @@ public class FoundFragment extends BaseFragment {
                     case 0:
                         DengLu();
                         break;
-                    case 1:
-
-                        break;
-                    case 2:
-                        break;
+//                    case 1:
+//                         Map();
+//                        break;
+//                    case 2:
+//                        break;
 
                 }
             }
@@ -73,6 +74,10 @@ public class FoundFragment extends BaseFragment {
                 return false;
             }
         });
+    }
+
+    private void Map() {
+        startActivity(new Intent(mContext, MapAtivity.class));
     }
 
     private void DengLu() {

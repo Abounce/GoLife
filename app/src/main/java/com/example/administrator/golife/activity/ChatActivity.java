@@ -112,10 +112,13 @@ public class ChatActivity extends AppCompatActivity {
         //替换fragement
         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
         ft.replace(R.id.chat_fl, easeChatFragment);
+
         ft.commit();
+
         // 获取发送广播的管理者
         mLBM = LocalBroadcastManager.getInstance(ChatActivity.this);
     }
+
 
 
 }

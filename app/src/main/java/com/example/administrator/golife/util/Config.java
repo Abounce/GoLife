@@ -45,4 +45,5 @@ public class Config {
     public static final String GROUP_INVITE_CHANGED ="group_invite_changed";//群邀请信息
     public static final String GROUP_ID ="group_id";
     public static final String EXIT_GROUP = "exit_group";
+    public static final String BAIDU_MAP_KEY="TOubFa3MvY37jlAnsv8LLz0GAQQOFkHL";
 }
